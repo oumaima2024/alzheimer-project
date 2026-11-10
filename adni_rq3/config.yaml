@@ -1,0 +1,97 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# config.yaml  –  ADNI RQ3: MCI-to-AD Conversion Prediction
+# ─────────────────────────────────────────────────────────────────────────────
+
+# ── Data paths ────────────────────────────────────────────────────────────────
+data:
+  raw_dir: "data/raw"          # put CDR_*.csv, ITEM.csv, DXSUM_*.csv here
+  processed_dir: "data/processed"
+  results_dir: "results"
+
+# ── Cohort definition ─────────────────────────────────────────────────────────
+cohort:
+  min_visits: 2                # minimum number of visits per participant
+  require_followup_months: 6   # minimum follow-up duration in months
+  cdr_mci_threshold: 0.5       # CDR global = 0.5 → included as MCI at baseline
+  cdr_ad_threshold: 1.0        # CDR global ≥ 1.0 at any follow-up → Converter
+
+# ── Feature groups ────────────────────────────────────────────────────────────
+features:
+  cdr:
+    - CDGLOBAL
+    - CDRSB
+    - CDMEMORY
+    - CDORIENT
+    - CDJUDGE
+    - CDCOMMUN
+    - CDHOME
+    - CDCARE
+  neuropsych:
+    - MMSE_TOTAL
+    - ADAS_TOTAL
+    - AVLT_T5
+    - AVLT_DELAY
+    - BOSTON_NAMING
+    - TMT_B
+  demographics:                # these would come from ADNI demographics file
+    - AGE
+    - PTEDUCAT
+    - PTGENDER_num
+    - APOE4
+
+# ── Train/test split ──────────────────────────────────────────────────────────
+split:
+  test_size: 0.20
+  val_size: 0.10               # fraction of training set used for validation
+  random_state: 42
+  stratify: true               # stratify by LABEL
+
+# ── Baseline models ───────────────────────────────────────────────────────────
+baseline:
+  logistic_regression:
+    C: 1.0
+    max_iter: 1000
+    class_weight: "balanced"
+    solver: "lbfgs"
+  random_forest:
+    n_estimators: 300
+    max_depth: null
+    min_samples_leaf: 2
+    class_weight: "balanced"
+    random_state: 42
+    n_jobs: -1
+  mlp:
+    hidden_layer_sizes: [128, 64, 32]
+    dropout: 0.3
+    lr: 0.001
+    batch_size: 32
+    epochs: 100
+    patience: 15               # early stopping patience
+
+# ── Longitudinal model (LSTM/GRU) ─────────────────────────────────────────────
+longitudinal:
+  model_type: "GRU"            # "LSTM" or "GRU"
+  hidden_size: 64
+  num_layers: 2
+  dropout: 0.3
+  bidirectional: false
+  lr: 0.001
+  batch_size: 32
+  epochs: 150
+  patience: 20
+  max_seq_len: 10              # truncate/pad to this number of visits
+
+# ── Evaluation ────────────────────────────────────────────────────────────────
+evaluation:
+  metrics:
+    - roc_auc
+    - average_precision
+    - balanced_accuracy
+    - f1
+    - sensitivity
+    - specificity
+  bootstrap_iterations: 1000
+  ci_alpha: 0.95
+
+# ── Reproducibility ───────────────────────────────────────────────────────────
+seed: 42

@@ -1,0 +1,53 @@
+2026-10-28 08:17:36,591 [INFO] train_longitudinal – === Step 1: Loading ADNI data ===
+2026-10-28 08:17:36,591 [INFO] src.data.loader – Loading CDR from data/raw/CDR_27Oct2026.csv
+2026-10-28 08:17:36,657 [INFO] src.data.loader – CDR loaded: 15137 rows, 4389 participants
+2026-10-28 08:17:36,657 [INFO] src.data.loader – Loading ITEM from data/raw/ITEM.csv
+/home/ubuntu/work/q3_adni/t/adni_rq3/src/data/loader.py:150: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
+  df['VISIT_MONTH'] = df[vc_col].apply(viscode_to_month)
+/home/ubuntu/work/q3_adni/t/adni_rq3/src/data/loader.py:151: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
+  df['VISCODE_NORM'] = df[vc_col].str.lower().str.strip()
+/home/ubuntu/work/q3_adni/t/adni_rq3/src/data/loader.py:154: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
+  df['MMSE_TOTAL'] = _compute_mmse_total(df)
+/home/ubuntu/work/q3_adni/t/adni_rq3/src/data/loader.py:155: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
+  df['ADAS_TOTAL'] = _compute_adas_total(df)
+/home/ubuntu/work/q3_adni/t/adni_rq3/src/data/loader.py:161: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
+  df['AVLT_T5'] = pd.to_numeric(df[avlt_t5_cols[0]], errors='coerce')
+/home/ubuntu/work/q3_adni/t/adni_rq3/src/data/loader.py:168: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
+  df['AVLT_DELAY'] = pd.to_numeric(df[avlt_delay_cols[0]], errors='coerce')
+/home/ubuntu/work/q3_adni/t/adni_rq3/src/data/loader.py:175: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
+  df['TMT_B'] = pd.to_numeric(df[tmt_cols[0]], errors='coerce')
+/home/ubuntu/work/q3_adni/t/adni_rq3/src/data/loader.py:189: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
+  df['BOSTON_NAMING'] = bos_data.sum(axis=1, min_count=5)
+2026-10-28 08:17:37,007 [INFO] src.data.loader – ITEM loaded: 5285 rows, 755 participants
+2026-10-28 08:17:37,012 [INFO] src.data.loader – Merging CDR and ITEM data...
+2026-10-28 08:17:37,032 [INFO] src.data.loader – Merged: 15135 rows, 4389 participants
+2026-10-28 08:17:37,036 [WARNING] src.data.loader – DXSUM not found at data/raw/DXSUM_PDXCONV_ADNIALL.csv. Using CDR-based labeling.
+2026-10-28 08:17:37,037 [INFO] train_longitudinal – === Step 2: Defining MCI cohort ===
+2026-10-28 08:17:37,037 [INFO] src.data.cohort – Labeling cohort using CDR global scores (no DXSUM available).
+2026-10-28 08:17:39,492 [INFO] src.data.cohort – Cohort: 1346 participants | 490 converters | 856 stable MCI
+2026-10-28 08:17:39,500 [INFO] src.data.cohort – Final cohort: 1346 participants, 7532 visit-rows
+2026-10-28 08:17:39,501 [INFO] train_longitudinal – === Step 3: Participant-level split ===
+2026-10-28 08:17:39,512 [INFO] src.data.splitting – Split: train=941 | val=135 | test=270 participants
+2026-10-28 08:17:39,513 [INFO] src.data.splitting – Converter rates – train: 0.36 | val: 0.36 | test: 0.36
+2026-10-28 08:17:39,513 [INFO] train_longitudinal – === Step 4: Building sequence feature arrays ===
+2026-10-28 08:17:39,513 [WARNING] src.data.preprocessing – Features not found in data: ['AGE', 'PTEDUCAT', 'PTGENDER_num', 'APOE4']
+2026-10-28 08:17:39,522 [INFO] src.data.preprocessing – Baseline features: 1346 participants, 14 features
+2026-10-28 08:17:39,596 [INFO] src.data.preprocessing – FeaturePipeline fitted on 941 samples, 14 features.
+2026-10-28 08:17:41,601 [INFO] src.data.preprocessing – Sequence data: 1346 participants, max_seq_len=10, features=8
+2026-10-28 08:17:41,604 [INFO] train_longitudinal – Train: 941 | Val: 135 | Test: 270 | T=10, F=8
+2026-10-28 08:17:41,604 [INFO] train_longitudinal – === Step 5: Training GRU model ===
+2026-10-28 08:17:43,282 [INFO] src.models.longitudinal_model – Training GRU_Longitudinal for up to 150 epochs on cpu...
+2026-10-28 08:17:48,363 [INFO] src.models.longitudinal_model – Epoch   10 | train=0.5830 val=0.5945
+2026-10-28 08:17:53,745 [INFO] src.models.longitudinal_model – Epoch   20 | train=0.4842 val=0.6454
+2026-10-28 08:17:58,534 [INFO] src.models.longitudinal_model – Epoch   30 | train=0.4359 val=0.6623
+2026-10-28 08:18:01,411 [INFO] src.models.longitudinal_model – Early stopping at epoch 36 (best epoch: 16)
+2026-10-28 08:18:01,412 [INFO] src.models.longitudinal_model – Restored best weights from epoch 16
+2026-10-28 08:18:01,419 [INFO] src.models.longitudinal_model – Saved GRU_Longitudinal to results/models/GRU_Longitudinal.pt
+2026-10-28 08:18:01,419 [INFO] train_longitudinal – === Step 6: Evaluating on test set ===
+2026-10-28 08:18:08,326 [INFO] train_longitudinal – GRU_Longitudinal: AUC=0.847 | AP=0.762 | BalAcc=0.756 | Sens=0.908 | Spec=0.605
+2026-10-28 08:18:08,326 [INFO] train_longitudinal – === Step 7: Generating figures ===
+2026-10-28 08:18:08,768 [INFO] src.evaluation.visualizations – Saved figure: results/figures/roc_GRU_Longitudinal.png
+2026-10-28 08:18:08,946 [INFO] src.evaluation.visualizations – Saved figure: results/figures/pr_GRU_Longitudinal.png
+2026-10-28 08:18:09,067 [INFO] src.evaluation.visualizations – Saved figure: results/figures/cm_GRU_Longitudinal.png
+2026-10-28 08:18:09,262 [INFO] src.evaluation.visualizations – Saved figure: results/figures/loss_GRU_Longitudinal.png
+2026-10-28 08:18:09,323 [INFO] train_longitudinal – === Longitudinal training complete ===

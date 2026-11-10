@@ -1,0 +1,62 @@
+2026-10-28 08:16:44,591 [INFO] train_baseline – === Step 1: Loading ADNI data ===
+2026-10-28 08:16:44,591 [INFO] src.data.loader – Loading CDR from data/raw/CDR_27Oct2026.csv
+2026-10-28 08:16:44,654 [INFO] src.data.loader – CDR loaded: 15137 rows, 4389 participants
+2026-10-28 08:16:44,654 [INFO] src.data.loader – Loading ITEM from data/raw/ITEM.csv
+/home/ubuntu/work/q3_adni/t/adni_rq3/src/data/loader.py:150: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
+  df['VISIT_MONTH'] = df[vc_col].apply(viscode_to_month)
+/home/ubuntu/work/q3_adni/t/adni_rq3/src/data/loader.py:151: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
+  df['VISCODE_NORM'] = df[vc_col].str.lower().str.strip()
+/home/ubuntu/work/q3_adni/t/adni_rq3/src/data/loader.py:154: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
+  df['MMSE_TOTAL'] = _compute_mmse_total(df)
+/home/ubuntu/work/q3_adni/t/adni_rq3/src/data/loader.py:155: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
+  df['ADAS_TOTAL'] = _compute_adas_total(df)
+/home/ubuntu/work/q3_adni/t/adni_rq3/src/data/loader.py:161: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
+  df['AVLT_T5'] = pd.to_numeric(df[avlt_t5_cols[0]], errors='coerce')
+/home/ubuntu/work/q3_adni/t/adni_rq3/src/data/loader.py:168: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
+  df['AVLT_DELAY'] = pd.to_numeric(df[avlt_delay_cols[0]], errors='coerce')
+/home/ubuntu/work/q3_adni/t/adni_rq3/src/data/loader.py:175: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
+  df['TMT_B'] = pd.to_numeric(df[tmt_cols[0]], errors='coerce')
+/home/ubuntu/work/q3_adni/t/adni_rq3/src/data/loader.py:189: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
+  df['BOSTON_NAMING'] = bos_data.sum(axis=1, min_count=5)
+2026-10-28 08:16:45,031 [INFO] src.data.loader – ITEM loaded: 5285 rows, 755 participants
+2026-10-28 08:16:45,034 [INFO] src.data.loader – Merging CDR and ITEM data...
+2026-10-28 08:16:45,052 [INFO] src.data.loader – Merged: 15135 rows, 4389 participants
+2026-10-28 08:16:45,055 [WARNING] src.data.loader – DXSUM not found at data/raw/DXSUM_PDXCONV_ADNIALL.csv. Using CDR-based labeling.
+2026-10-28 08:16:45,055 [INFO] train_baseline – === Step 2: Defining MCI cohort ===
+2026-10-28 08:16:45,055 [INFO] src.data.cohort – Labeling cohort using CDR global scores (no DXSUM available).
+2026-10-28 08:16:47,572 [INFO] src.data.cohort – Cohort: 1346 participants | 490 converters | 856 stable MCI
+2026-10-28 08:16:47,581 [INFO] src.data.cohort – Final cohort: 1346 participants, 7532 visit-rows
+2026-10-28 08:16:47,582 [INFO] train_baseline – === Step 3: Participant-level split ===
+2026-10-28 08:16:47,593 [INFO] src.data.splitting – Split: train=941 | val=135 | test=270 participants
+2026-10-28 08:16:47,594 [INFO] src.data.splitting – Converter rates – train: 0.36 | val: 0.36 | test: 0.36
+2026-10-28 08:16:47,595 [INFO] train_baseline – === Step 4: Building baseline feature matrices ===
+2026-10-28 08:16:47,595 [WARNING] src.data.preprocessing – Features not found in data: ['AGE', 'PTEDUCAT', 'PTGENDER_num', 'APOE4']
+2026-10-28 08:16:47,606 [INFO] src.data.preprocessing – Baseline features: 1346 participants, 14 features
+2026-10-28 08:16:47,697 [INFO] src.data.preprocessing – FeaturePipeline fitted on 941 samples, 14 features.
+2026-10-28 08:16:47,704 [INFO] train_baseline – Train: 941 | Val: 135 | Test: 270 | Features: 8
+2026-10-28 08:16:47,704 [INFO] train_baseline – === Step 5: Training models ===
+2026-10-28 08:16:47,704 [INFO] src.models.baseline_models – Fitting LogisticRegression on 941 samples...
+2026-10-28 08:16:47,717 [INFO] src.models.baseline_models – Saved LogisticRegression to results/models/LogisticRegression.pkl
+2026-10-28 08:16:47,717 [INFO] src.models.baseline_models – Fitting RandomForest on 941 samples...
+2026-10-28 08:16:48,342 [INFO] src.models.baseline_models – Saved RandomForest to results/models/RandomForest.pkl
+2026-10-28 08:16:50,186 [INFO] src.models.baseline_models – Training MLP for up to 100 epochs...
+2026-10-28 08:16:52,345 [INFO] src.models.baseline_models – Early stopping at epoch 19
+2026-10-28 08:16:52,345 [INFO] src.models.baseline_models – Restored best model weights.
+2026-10-28 08:16:52,350 [INFO] src.models.baseline_models – Saved MLP to results/models/MLP.pkl
+2026-10-28 08:16:52,350 [INFO] train_baseline – === Step 6: Evaluating on test set ===
+2026-10-28 08:16:59,651 [INFO] src.evaluation.visualizations – Saved figure: results/figures/cm_LogisticRegression.png
+2026-10-28 08:16:59,652 [INFO] train_baseline – LogisticRegression: AUC=0.716 | AP=0.610 | BalAcc=0.691 | Sens=0.643 | Spec=0.738
+2026-10-28 08:17:06,579 [INFO] src.evaluation.visualizations – Saved figure: results/figures/cm_RandomForest.png
+2026-10-28 08:17:06,579 [INFO] train_baseline – RandomForest: AUC=0.702 | AP=0.613 | BalAcc=0.677 | Sens=0.633 | Spec=0.721
+2026-10-28 08:17:13,291 [INFO] src.evaluation.visualizations – Saved figure: results/figures/cm_MLP.png
+2026-10-28 08:17:13,291 [INFO] train_baseline – MLP: AUC=0.708 | AP=0.601 | BalAcc=0.688 | Sens=0.592 | Spec=0.785
+2026-10-28 08:17:13,455 [INFO] src.evaluation.visualizations – Saved figure: results/figures/loss_MLP.png
+2026-10-28 08:17:13,455 [INFO] train_baseline – === Step 7: Generating figures ===
+2026-10-28 08:17:13,681 [INFO] src.evaluation.visualizations – Saved figure: results/figures/roc_baseline.png
+2026-10-28 08:17:13,867 [INFO] src.evaluation.visualizations – Saved figure: results/figures/pr_baseline.png
+2026-10-28 08:17:14,631 [INFO] src.evaluation.visualizations – Saved figure: results/figures/metric_comparison_baseline.png
+2026-10-28 08:17:14,870 [INFO] src.evaluation.visualizations – Saved figure: results/figures/feature_importance_rf.png
+2026-10-28 08:17:15,076 [INFO] src.evaluation.visualizations – Saved figure: results/figures/cohort_summary.png
+2026-10-28 08:17:15,277 [INFO] src.evaluation.visualizations – Saved figure: results/figures/visit_distribution.png
+2026-10-28 08:17:15,279 [INFO] train_baseline – Results saved to results/baseline_results.json
+2026-10-28 08:17:15,340 [INFO] train_baseline – === Baseline training complete ===

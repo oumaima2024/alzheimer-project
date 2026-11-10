@@ -1,0 +1,75 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.2.0, pluggy-1.7.0
+rootdir: /home/ubuntu/work/q3_adni/t/adni_rq3
+configfile: pytest.ini
+testpaths: tests
+plugins: anyio-4.15.1
+collected 59 items
+
+tests/test_data.py::TestCohortDefinition::test_cdr_labeling_returns_dataframe PASSED [  1%]
+tests/test_data.py::TestCohortDefinition::test_labels_are_binary PASSED  [  3%]
+tests/test_data.py::TestCohortDefinition::test_excludes_single_visit_participants PASSED [  5%]
+tests/test_data.py::TestCohortDefinition::test_define_cohort_returns_tuple PASSED [  6%]
+tests/test_data.py::TestCohortDefinition::test_define_cohort_long_df_has_label_col PASSED [  8%]
+tests/test_data.py::TestCohortDefinition::test_no_non_mci_at_baseline PASSED [ 10%]
+tests/test_data.py::TestPreprocessing::test_feature_pipeline_fit_transform PASSED [ 11%]
+tests/test_data.py::TestPreprocessing::test_pipeline_no_nan_after_impute PASSED [ 13%]
+tests/test_data.py::TestPreprocessing::test_pipeline_transform_unseen_data PASSED [ 15%]
+tests/test_data.py::TestPreprocessing::test_transform_before_fit_raises PASSED [ 16%]
+tests/test_data.py::TestPreprocessing::test_build_baseline_features_shape PASSED [ 18%]
+tests/test_data.py::TestPreprocessing::test_build_sequence_features_shape PASSED [ 20%]
+tests/test_data.py::TestPreprocessing::test_sequence_masks_sum_correctly PASSED [ 22%]
+tests/test_data.py::TestPreprocessing::test_get_available_features_filters 
+-------------------------------- live log call ---------------------------------
+WARNING  src.data.preprocessing:preprocessing.py:57 Features not found in data: ['NONEXISTENT']
+PASSED                                                                   [ 23%]
+tests/test_data.py::TestSplitting::test_split_no_overlap PASSED          [ 25%]
+tests/test_data.py::TestSplitting::test_split_covers_all_participants PASSED [ 27%]
+tests/test_data.py::TestSplitting::test_test_size_respected PASSED       [ 28%]
+tests/test_data.py::TestSplitting::test_stratification_maintains_ratio PASSED [ 30%]
+tests/test_data.py::TestSplitting::test_filter_arrays_by_rids PASSED     [ 32%]
+tests/test_integration.py::TestFullBaselinePipeline::test_logistic_regression_pipeline 
+-------------------------------- live log setup --------------------------------
+WARNING  src.data.preprocessing:preprocessing.py:57 Features not found in data: ['BOSTON_NAMING', 'TMT_B', 'AGE', 'PTEDUCAT', 'PTGENDER_num', 'APOE4']
+PASSED                                                                   [ 33%]
+tests/test_integration.py::TestFullBaselinePipeline::test_random_forest_pipeline PASSED [ 35%]
+tests/test_integration.py::TestFullBaselinePipeline::test_mlp_pipeline PASSED [ 37%]
+tests/test_integration.py::TestFullLongitudinalPipeline::test_gru_pipeline PASSED [ 38%]
+tests/test_integration.py::TestLeakagePrevention::test_train_test_participant_disjoint PASSED [ 40%]
+tests/test_integration.py::TestLeakagePrevention::test_pipeline_fit_only_on_train PASSED [ 42%]
+tests/test_integration.py::TestLeakagePrevention::test_labels_from_followup_only PASSED [ 44%]
+tests/test_metrics.py::TestComputeMetrics::test_returns_expected_keys PASSED [ 45%]
+tests/test_metrics.py::TestComputeMetrics::test_roc_auc_above_chance PASSED [ 47%]
+tests/test_metrics.py::TestComputeMetrics::test_perfect_classifier PASSED [ 49%]
+tests/test_metrics.py::TestComputeMetrics::test_sensitivity_specificity_in_range PASSED [ 50%]
+tests/test_metrics.py::TestComputeMetrics::test_no_proba_gives_nan_auc PASSED [ 52%]
+tests/test_metrics.py::TestBootstrapCI::test_returns_ci_structure PASSED [ 54%]
+tests/test_metrics.py::TestBootstrapCI::test_ci_lower_le_mean_le_upper PASSED [ 55%]
+tests/test_metrics.py::TestBootstrapCI::test_ci_width_positive PASSED    [ 57%]
+tests/test_metrics.py::TestCurves::test_roc_curve_shape PASSED           [ 59%]
+tests/test_metrics.py::TestCurves::test_pr_curve_shape PASSED            [ 61%]
+tests/test_metrics.py::TestCurves::test_find_optimal_threshold_youden PASSED [ 62%]
+tests/test_metrics.py::TestCurves::test_find_optimal_threshold_f1 PASSED [ 64%]
+tests/test_models.py::TestLogisticRegression::test_fit_predict_proba_shape PASSED [ 66%]
+tests/test_models.py::TestLogisticRegression::test_proba_in_range PASSED [ 67%]
+tests/test_models.py::TestLogisticRegression::test_predict_binary PASSED [ 69%]
+tests/test_models.py::TestLogisticRegression::test_save_load PASSED      [ 71%]
+tests/test_models.py::TestRandomForest::test_fit_predict_proba_shape PASSED [ 72%]
+tests/test_models.py::TestRandomForest::test_proba_in_range PASSED       [ 74%]
+tests/test_models.py::TestRandomForest::test_feature_importances_shape PASSED [ 76%]
+tests/test_models.py::TestRandomForest::test_save_load PASSED            [ 77%]
+tests/test_models.py::TestMLP::test_fit_predict_proba_shape PASSED       [ 79%]
+tests/test_models.py::TestMLP::test_proba_in_range PASSED                [ 81%]
+tests/test_models.py::TestMLP::test_early_stopping_with_val PASSED       [ 83%]
+tests/test_models.py::TestMLP::test_save_load PASSED                     [ 84%]
+tests/test_models.py::TestLongitudinalModel::test_fit_predict_proba_shape[GRU] PASSED [ 86%]
+tests/test_models.py::TestLongitudinalModel::test_fit_predict_proba_shape[LSTM] PASSED [ 88%]
+tests/test_models.py::TestLongitudinalModel::test_proba_in_range PASSED  [ 89%]
+tests/test_models.py::TestLongitudinalModel::test_masking_ignores_padding PASSED [ 91%]
+tests/test_models.py::TestLongitudinalModel::test_save_load PASSED       [ 93%]
+tests/test_models.py::TestLongitudinalModel::test_early_stopping_with_val PASSED [ 94%]
+tests/test_regressions.py::test_baseline_does_not_backfill_from_future_visit PASSED [ 96%]
+tests/test_regressions.py::test_followup_requirement_is_enforced PASSED  [ 98%]
+tests/test_regressions.py::test_sequence_excludes_conversion_and_post_conversion_visits PASSED [100%]
+
+============================= 59 passed in 10.32s ==============================
